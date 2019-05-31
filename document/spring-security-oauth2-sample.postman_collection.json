@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "f0414137-e2ea-4ba5-add2-f2122b891bae",
+		"name": "spring-security-oauth2-sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "code:/oauth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "neldBa",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:8090/",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://client:secret@localhost:8080/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"auth": {
+						"user": "client",
+						"password": "secret"
+					},
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "password:/oauth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://client:secret@localhost:8080/oauth/token?grant_type=password&username=user&password=123456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"auth": {
+						"user": "client",
+						"password": "secret"
+					},
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "username",
+							"value": "user"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "client_credentials:/oauth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://client:secret@localhost:8080/oauth/token?grant_type=password&username=user&password=123456",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"auth": {
+						"user": "client",
+						"password": "secret"
+					},
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password"
+						},
+						{
+							"key": "username",
+							"value": "user"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/refresh_token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://client:secret@localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=a11abfbe-69b0-459c-8d4b-9ab5088b65b7&scope=app test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"auth": {
+						"user": "client",
+						"password": "secret"
+					},
+					"port": "8080",
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token"
+						},
+						{
+							"key": "refresh_token",
+							"value": "a11abfbe-69b0-459c-8d4b-9ab5088b65b7"
+						},
+						{
+							"key": "scope",
+							"value": "app test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

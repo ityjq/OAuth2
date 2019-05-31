@@ -1,0 +1,22 @@
+
+
+客户端的授权模式
+	客户端必须得到用户的授权（authorization grant），才能获得令牌（access token）。OAuth 2.0定义了四种授权方式。
+	授权码模式（authorization code）
+	简化模式（implicit）
+	密码模式（resource owner password credentials）
+	客户端模式（client credentials）
+
+Token 存储方式
+package org.springframework.security.oauth2.provider.token.store;
+    InMemoryTokenStore
+    JdbcTokenStore
+    JwtTokenStore
+package org.springframework.security.oauth2.provider.token.store.redis;
+    RedisTokenStore
+...
+
+Token可以保存在内存中（也可以保存在数据库、Redis中）。
+如果保存在中间件（数据库、Redis），那么资源服务器与认证服务器可以不在同一个工程中
+
+
