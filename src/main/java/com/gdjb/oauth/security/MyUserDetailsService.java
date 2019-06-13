@@ -77,23 +77,5 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
- /*   @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return buildUser(username);
-    }
-
-    private UserDetails buildUser(String username) {
-        // 根据用户名查找用户信息
-        //根据查找到的用户信息判断用户是否被冻结
-        String password = passwordEncoder.encode("123456");
-        logger.info("数据库密码是:" + password);
-
-        // 验证用户信息时 会默认添加 ROLE_  如：ROLE_USER
-        List<GrantedAuthority> grantedAuthorities =  AuthorityUtils.commaSeparatedStringToAuthorityList("USER");
-
-        return new User(username, password,
-                true, true, true, true,
-                grantedAuthorities);
-    }*/
 
 }

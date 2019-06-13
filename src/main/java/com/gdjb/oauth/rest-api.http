@@ -1,0 +1,69 @@
+
+#登陆
+POST http://localhost:8080/control/authentication/login?username=admin&password=888888
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+
+
+#密码模式（resource owner password credentials）
+POST http://jie:jbkj@localhost:8080/oauth/token?username=root&password=root&grant_type=password&scope=app test
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-11T014319.200.json
+<> 2019-06-11T013916.200.json
+<> 2019-06-11T013543.200.json
+<> 2019-06-11T011007.200.json
+<> 2019-06-11T010224.200.json
+
+###
+
+
+# 客户端模式（client credentials）
+POST http://jie:jbkj@localhost:8080/oauth/token?grant_type=client_credentials&scope=app test
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-11T014726.200.json
+
+###
+
+
+#授权码
+#在浏览输入：
+http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/
+
+<> 2019-06-11T014800.200.html
+<> 2019-06-11T012510.200.html
+
+###
+
+#通过code获取access_token与fresh_token
+POST http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=lefbTW
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-06-11T014839.200.json
+<> 2019-06-11T014812.400.json
+###
+
+#浏览器中输入：直接获取access_token
+GET http://localhost:8080/oauth/authorize?client_id=jie&response_type=token&redirect_uri=http://localhost:8090/
+
+###
+#获取OAuth2客户信息
+GET http://localhost:8080/user?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzb3VyY2VJZCJdLCJnZGpiIjoid3d3LmdkLWpiLmNvbSIsInVzZXJfbmFtZSI6InJvb3QiLCJzY29wZSI6WyJhcHAiLCJ0ZXN0Il0sImV4cCI6MTU2MDI3NDk5OSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiJdLCJqdGkiOiJhMWNiODIwMi05NWVlLTQwODYtYmM2ZC0wZGFkZmRjYWNkZGUiLCJjbGllbnRfaWQiOiJqaWUifQ.QMfIHUkFwnFRlolQZ_TNskMm3f3I3mk8jz3D1cYGPFY
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+#通过refresh_token获取access_token与refresh_token
+POST http://jie:jbkj@localhost:8080/oauth/token?refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzb3VyY2VJZCJdLCJnZGpiIjoid3d3LmdkLWpiLmNvbSIsInVzZXJfbmFtZSI6InJvb3QiLCJzY29wZSI6WyJhcHAiLCJ0ZXN0Il0sImF0aSI6IjFjYzRkMjNlLTgwYWUtNDQxYi1hOWE3LTM3OGUwODIyZTNlNyIsImV4cCI6MTU2MjgyMTM0NCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiJdLCJqdGkiOiJlMTk4Y2E1ZS0wYTVhLTRhZjEtODA4Yi04MmQ1OTJjZThmYTYiLCJjbGllbnRfaWQiOiJqaWUifQ.kanuYaMY0Rp_bPHf2ga4-09vjIJIdp-yIjHtuQye4wE&grant_type=refresh_token&scope=app test
+Accept: */*
+Cache-Control: no-cache
+
+###

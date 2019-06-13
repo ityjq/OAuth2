@@ -24,7 +24,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources
                 .tokenStore(tokenStore)
-                .resourceId("resourceId");
+                .resourceId("QQ");
     }
 
     @Override
@@ -35,10 +35,10 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .requestMatchers()
-                .antMatchers("/user", "/res/**")
+                .antMatchers("/user", "/resources/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user", "/res/**")
+                .antMatchers("/user", "/resources/**")
                 .authenticated();
     }
 }

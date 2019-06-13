@@ -29,4 +29,5 @@ public class ApplicationProperties {
     public void setSecurity(SecurityProperties security) {
         this.security = security;
     }
+
 }

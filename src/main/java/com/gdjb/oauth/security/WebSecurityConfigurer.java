@@ -13,6 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author jie
@@ -30,11 +33,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
                 .authorizeRequests()
-                .antMatchers("/all.html").hasAnyRole("SUPER_ADMIN")
-                .antMatchers("/static/**", "/login.html", "/control/authentication/require", "/control/authentication/login"
-                        ,"/control/equipment/new","/control/equipment/getserviceurl","/control/equipment/getConfig").permitAll()// 这些页面不需要身份认证,其他请求需要认证
+              //  .antMatchers("/static/**","/index.html").hasAnyRole("ROLE_SUPER_ADMIN")
+                .antMatchers("/static/js/angularjs/jquery.min.js","/static/js/angularjs/angular.min.js","/static/js/base.js","/static/js/service/testService.js",
+                        "/static/js/controller/testController.js","/login.html").permitAll()// 这些页面不需要身份认证,其他请求需要认证
                 .anyRequest()   // 任何请求
                 .authenticated() // 都需要身份认证
                 // .anonymous()
@@ -47,16 +49,23 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 //   .logout().logoutSuccessUrl("/control/authentication/login?logout")
                 .logout()   //退出登录相关配置
-                .logoutUrl("login.html")   //自定义退出登录页面
+                .logoutUrl("/control/authentication/logout")   //自定义退出登录页面
                 //      .logoutSuccessHandler(new CoreqiLogoutSuccessHandler()) //退出成功后要做的操作（如记录日志），和logoutSuccessUrl互斥
                 //.logoutSuccessUrl("/index") //退出成功后跳转的页面
-                .deleteCookies("JSESSIONID")
+              //  .deleteCookies("JSESSIONID")
                 .and()
                 .authorizeRequests()// 对请求授权
                 // error  127.0.0.1 将您重定向的次数过多
                 .and()
                 .csrf().disable();// 禁用跨站攻击
     }
+
+ /*   @Override
+    public void configure(final HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests()
+                .anyRequest()
+                .permitAll();
+    }*/
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -106,5 +115,19 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @ConditionalOnMissingBean(PasswordEncoder.class)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 跨域
+     * @return
+     */
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
     }
 }

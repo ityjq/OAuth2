@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.gdjb.oauth.config;
 
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-
+    <meta charset="UTF-8">
     <title>Title</title>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/angular.min.js"></script>
-<!--    <script src="js/base.js"></script>-->
-<!--    <script src="js/gdjbService.js"></script>-->
-<!--    <script src="js/gdjbController.js"></script>-->
 
-    <script>
-        var app=angular.module('gdjb1',[]);
-        app.controller('gdjbController', function ($scope) {
-
-                $scope.helloWorld = "你好!世界!";
-                $scope.helloWorld = function () {
-                    $scope.helloWorld = "世界!你好!";
-                };
-            }
-        );
-    </script>
+    <script src="static/js/angularjs/jquery.min.js"></script>
+    <script src="static/js/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="static/js/base.js"></script>
+    <script src="static/js/service/testService.js"></script>
+    <script src="static/js/controller/testController.js"></script>
 
 </head>
-<body>
-<div ng-app="gdjb1" ng-controller="gdjbController" ng-if="helloWorld()">
-helloWorld1:  {{helloWorld}}
-</div>
-<!--<div ng-app="gdjb" ng-controller="gdjbController" ng-if="helloWorld()">
-helloWorld:  {{helloWorld}}
-</div>-->
+<body ng-app="love" ng-controller="testController" ng-init="aaa()">
+
+<!--<button type="button" ng-show=" entity.project==null ? false : true" class="btn bg-olive btn-xs"
+        ng-click="untieProject(entity.equipment.id)">解绑
+</button>-->
+<!--http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/-->
+<button type="button" ng-click="gainCode()">获取授权码</button>
+<a href="http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/">获取授权码</a>
+
+<input placeholder="Code" ng-model="code">
+<button type="button" ng-click="gainToken()">获取token</button>
+<a method="post"
+   href="http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code={{code}}">获取token</a>
+<p>{{hitokoto.hitokoto}}</p>
+
 </body>
 </html>

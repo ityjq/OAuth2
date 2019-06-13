@@ -3,8 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="js/angularjs/jquery.min.js"></script>
+    <script src="js/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="js/base.js"></script>
+    <script src="js/service/testService.js"></script>
+    <script src="js/controller/testController.js"></script>
+<script>
+    $(".a_post").on("click",function(event){
+        event.preventDefault();//使a自带的方法失效，即无法调整到href中的URL(http://www.baidu.com)
+        $.ajax({
+            type: "POST",
+            url: "http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=dV3P8a",
+            contentType:"application/json",
+          //  data: JSON.stringify({param1:param1,param2:param2}),//参数列表
+            dataType:"json",
+            success: function(result){
+                //请求正确之后的操作
+                alert("12")
+            },
+            error: function(result){
+                //请求失败之后的操作
+                alert("34")
+            }
+        });
+    });
+</script>
 </head>
-<body>
-你好世界!!!!
+<body ng-app="love" ng-controller="testController" ng-init="aaa()">
+
+<!--<button type="button" ng-show=" entity.project==null ? false : true" class="btn bg-olive btn-xs"
+        ng-click="untieProject(entity.equipment.id)">解绑
+</button>-->
+<!--http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/-->
+<button type="button" ng-click="gainCode()">获取授权码</button>
+<a href="http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/">获取授权码</a>
+
+
+<input placeholder="Code" ng-model="code">
+<button type="button" ng-click="gainToken()">获取token</button>
+<a class="a_post" href="#">获取token</a>
+<input placeholder="token" ng-model="token">
+<button type="button" ng-click="test1()">test请求</button>
+
+<p>{{hitokoto.hitokoto}}</p>
+
 </body>
 </html>

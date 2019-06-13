@@ -56,12 +56,14 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 // client_id
                 .withClient("jie")
                 // client_secret
-                .secret(passwordEncoder.encode("secret"))
+                .secret(passwordEncoder.encode("jbkj"))
                 // 该client允许的授权类型，不同的类型，则获得token的方式不一样。
                 .authorizedGrantTypes("authorization_code", "implicit", "password", "client_credentials", "refresh_token")
-                .resourceIds("resourceId")
+//                .authorizedGrantTypes("authorization_code")
+                .resourceIds("QQ")
                 //回调uri，在authorization_code与implicit授权方式时，用以接收服务器的返回信息
                 .redirectUris("http://localhost:8090/")
+//                .redirectUris("")
                 // 允许的授权范围
                 .scopes("app", "test")
                 // 自动审核：跳过手动选择允许的授权范围
@@ -76,7 +78,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         endpoints.tokenStore(tokenStore)
                 // 设置后 授权码模式 用户可以选取scopes
                 .approvalStore(approvalStore)
-                .reuseRefreshTokens(false)
+                .reuseRefreshTokens(true)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(myUserDetailsService);
 
@@ -86,6 +88,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
             enhancers.add(jwtTokenEnhancer);
             enhancers.add(jwtAccessTokenConverter);
             enhancerChain.setTokenEnhancers(enhancers);
+          //  System.err.println(jwtAccessTokenConverter+"::::::::::::"+jwtTokenEnhancer);
             endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
         }
     }
