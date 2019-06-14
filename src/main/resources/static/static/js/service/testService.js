@@ -14,4 +14,5 @@ app.service('testService', function ($http) {
         // return $http.get('../gainToken?code='+code)
          return $http.post('http://jie:jbkj@localhost:8080/oauth/token?redirect_uri='+'http://localhost:8090/&grant_type=authorization_code&code='+code);
     }
+
 });

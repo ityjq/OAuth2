@@ -19,4 +19,10 @@ app.service('testService', function ($http) {
         return $http.get('../test1?code='+code)
            // return $http.post('http://localhost:8080/test1?token='+token);
     }
+    this.redirect = function (code) {
+        // return $http.get('../gainToken?code='+code)
+        return $http.get('http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/');
+
+
+    }
 });

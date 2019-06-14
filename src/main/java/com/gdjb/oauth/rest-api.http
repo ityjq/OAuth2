@@ -1,6 +1,7 @@
 
 #登陆
 POST http://localhost:8080/control/authentication/login?username=admin&password=888888
+#POST http://localhost:9595/login?username=123123123&password=312312312123
 Accept: */*
 Cache-Control: no-cache
 
@@ -8,6 +9,11 @@ Cache-Control: no-cache
 
 
 
+#密码模式（resource owner password credentials）
+POST http://jie:jbkj@172.20.0.156:9595/oauth/token?username=123123123&password=312312312123&grant_type=password&scope= test
+Accept: */*
+Cache-Control: no-cache
+###
 #密码模式（resource owner password credentials）
 POST http://jie:jbkj@localhost:8080/oauth/token?username=root&password=root&grant_type=password&scope=app test
 Accept: */*
@@ -42,7 +48,7 @@ http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_
 ###
 
 #通过code获取access_token与fresh_token
-POST http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=lefbTW
+POST http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=8ekjWz
 Accept: */*
 Cache-Control: no-cache
 

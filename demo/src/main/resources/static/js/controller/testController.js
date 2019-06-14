@@ -1,5 +1,5 @@
 //控制层
-app.controller('testController', function ($scope, $timeout, testService) {
+app.controller('testController', function ($scope, $timeout,$http, testService) {
 
         $scope.aaa = function () {
             // window.clearInterval(t2);
@@ -30,23 +30,23 @@ app.controller('testController', function ($scope, $timeout, testService) {
         $scope.gainToken = function () {
             // window.clearInterval(t2);
 
-            if ($scope.code==null)
+            if ($scope.code == null)
                 alert($scope.code)
             else {
-                alert( "进来了:"+ $scope.code)
+                alert("进来了:" + $scope.code)
                 testService.gainToken($scope.code).success(
-                    function (response) {
-                        $scope.token = response;
-                        alert($scope.token.access_token);
-                    }
+                    /*function (response) {
+                     //   $scope.token = response;
+                       // alert($scope.token.access_token);
+                    }*/
                 );
             }
         };
-        $scope.token=""
+        $scope.token = ""
         $scope.test1 = function () {
             // window.clearInterval(t2);
 
-            if ($scope.code==null)
+            if ($scope.code == null)
                 alert($scope.code)
             else {
                 testService.test1($scope.code).success(
@@ -55,6 +55,27 @@ app.controller('testController', function ($scope, $timeout, testService) {
                         alert($scope.coder);
                     }
                 );
+            }
+        };
+        $scope.redirect1 = function () {
+            // window.clearInterval(t2);
+
+            if ($scope.code == null)
+                alert($scope.code)
+            else {
+                $http.jsonp('http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/').success(function(lastData, status, headers) {
+                    alert(status,status,headers)
+                    if (status==302) {
+                        alert(status,status,headers)
+
+                    }else if (status==200) {
+                        alert(200) ;
+                    }
+                });
+
+
+
+
             }
         };
 

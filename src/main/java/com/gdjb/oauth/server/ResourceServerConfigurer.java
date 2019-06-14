@@ -35,10 +35,10 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .requestMatchers()
-                .antMatchers("/user", "/resources/**")
+                .antMatchers("/user", "/resources/**", "/oauth/token")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user", "/resources/**")
+                .antMatchers("/user", "/resources/**", "/oauth/token")
                 .authenticated();
     }
 }

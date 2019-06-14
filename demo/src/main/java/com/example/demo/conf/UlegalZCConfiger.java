@@ -108,7 +108,7 @@ public class UlegalZCConfiger {
     }*/
     private ResourceOwnerPasswordResourceDetails resource() {
         ResourceOwnerPasswordResourceDetails resource = new ResourceOwnerPasswordResourceDetails();
-//        List<Map<String,String>> result = configService.getSystemVo(" select * from system_default where pid = ( select id from system_default where key_name = 'defaultSystemAuth' and key_value = '1' ) ORDER BY pid, id; ");
+   //     List<Map<String,String>> result = configService.getSystemVo(" select * from system_default where pid = ( select id from system_default where key_name = 'defaultSystemAuth' and key_value = '1' ) ORDER BY pid, id; ");
 //        Map auth = result.get(0);
         resource.setClientId("jie");
         resource.setClientSecret("jbkj");

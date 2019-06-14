@@ -7,14 +7,11 @@ import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.InetSocketAddress;
 import java.util.Map;
 
 /**
@@ -31,6 +28,9 @@ public  class Controller {
 
     @Autowired
     private OAuth2RestOperations oauthRestTemplate;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @PreAuthorize("#oauth2.hasScope('app') and #oauth2.hasScope('test')")
@@ -84,7 +84,7 @@ public  class Controller {
         RestTemplate template = new RestTemplate();
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
 
-        //ResponseEntity<String> response = oauthRestTemplate.exchange(url, HttpMethod.POST, stringResponseEntity, String.class);
+       // ResponseEntity<String> response = oauthRestTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         String sttr = stringResponseEntity.toString();
         System.out.println(sttr);
         return accessToken.getValue();
@@ -92,21 +92,49 @@ public  class Controller {
 
 
     @RequestMapping("/yjq")
-    public String getToken(@RequestParam String code) {
-        //   log.info("receive code {}",code);
+    public ResponseEntity getToken(@RequestParam String code) {
+
+
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        String url = "http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code="+code;
+        String url1 = "http://localhost:8080/control/authentication/login?username=admin&password=888888";
+//        headers.add("client_secret", "jbkj");
+//        headers.add("client_id", "jie");
+//        String url = "http://localhost:520/hitokoto/test";
+        //HttpEntity<String> requestEntity = new HttpEntity<String>(null, requestHeaders);
+        HttpEntity<String> entity = new HttpEntity<String>("\"client_secret\":\"jbkj\",\"client_id\":\"jie\"",headers);
+        ResponseEntity<String> strbody1=restTemplate.exchange(url1, HttpMethod.POST, entity,String.class);
+
+       // String strbody=restTemplate.exchange(url, HttpMethod.POST, entity,String.class).getBody();
+        //ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+
+
+
+
+
+     //   HttpHeaders headers = new HttpHeaders();
+
+
+//        WeatherResponse weatherResponse= JSONObject.parseObject(strbody,WeatherResponse.class);
+
+
+        //System.err.println("::::::::::::::"+strbody);
+
+        //   log.info("receive code {}",code);
+
 //        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+      /*  MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
    //     params.add("grant_type", "authorization_code");
         params.add("code", code);
         params.add("client_id", "jie");
         params.add("client_secret", "jbkj");
         params.add("redirect_uri", "http://localhost:8090/");
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
-        ResponseEntity<String> response = oauthRestTemplate.postForEntity("http://localhost:8080/oauth/token", requestEntity, String.class);
-        String token = response.getBody();
+       // HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, headers);
+     //   ResponseEntity<String> response = oauthRestTemplate.postForEntity("http://172.20.0.156:520/hitokoto/test", requestEntity, String.class);
+        String token = response.getBody();*/
         // log.info("token => {}",token);
-        return token;
+        return strbody1;
     }
 
 

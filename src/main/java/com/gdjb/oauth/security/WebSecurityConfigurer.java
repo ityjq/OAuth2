@@ -35,7 +35,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
               //  .antMatchers("/static/**","/index.html").hasAnyRole("ROLE_SUPER_ADMIN")
-                .antMatchers("/static/js/angularjs/jquery.min.js","/static/js/angularjs/angular.min.js","/static/js/base.js","/static/js/service/testService.js",
+                .antMatchers("/oauth/**","/static/js/angularjs/jquery.min.js","/static/js/angularjs/angular.min.js","/static/js/base.js","/static/js/service/testService.js",
                         "/static/js/controller/testController.js","/login.html").permitAll()// 这些页面不需要身份认证,其他请求需要认证
                 .anyRequest()   // 任何请求
                 .authenticated() // 都需要身份认证
@@ -58,6 +58,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 // error  127.0.0.1 将您重定向的次数过多
                 .and()
                 .csrf().disable();// 禁用跨站攻击
+
     }
 
  /*   @Override
