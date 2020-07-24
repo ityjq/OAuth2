@@ -28,7 +28,7 @@ public class ThirdClientServiceImpl implements ThirdClientService {
     @Override
     public List<ThirdClient> findAll() {
         ArrayList<ThirdClient> all = thirdClientDao.findAll();
-     //   System.out.println("aaa");
+        //   System.out.println("aaa");
         return all;
     }
 

@@ -16,10 +16,9 @@ public class OAuth2ResourceServerConfigRemoteTokenService extends ResourceServer
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                       .anyRequest()
-                       .permitAll();
+                .anyRequest()
+                .permitAll();
     }
-
 
 
     @Primary

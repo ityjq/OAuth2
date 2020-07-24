@@ -10,12 +10,14 @@ Cache-Control: no-cache
 
 
 #密码模式（resource owner password credentials）
-POST http://jie:jbkj@172.20.0.156:9595/oauth/token?username=123123123&password=312312312123&grant_type=password&scope= test
+POST http://jie:jbkj@172.20.0.156:9595/oauth/token?username=root&password=root&grant_type=password&scope= app
 Accept: */*
 Cache-Control: no-cache
+
 ###
 #密码模式（resource owner password credentials）
-POST http://jie:jbkj@localhost:8080/oauth/token?username=root&password=root&grant_type=password&scope=app test
+POST http://jie:jbkj@localhost:8080/oauth/token?username=root&password=root&grant_type=password&scope=app ROLE_SUPER_ADMIN
+Set-Cookie: JSESSIONID=05070E8E7AAD5287D9A2E01264AB5452;
 Accept: */*
 Cache-Control: no-cache
 
@@ -40,7 +42,7 @@ Cache-Control: no-cache
 
 #授权码
 #在浏览输入：
-http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/
+http://172.20.0.156:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://172.20.0.156:8090/
 
 <> 2019-06-11T014800.200.html
 <> 2019-06-11T012510.200.html
@@ -48,12 +50,13 @@ http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_
 ###
 
 #通过code获取access_token与fresh_token
-POST http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=8ekjWz
+POST http://jie:jbkj@localhost:8080/oauth/token?redirect_uri=http://localhost:8090/&grant_type=authorization_code&code=t9navd
 Accept: */*
 Cache-Control: no-cache
 
 <> 2019-06-11T014839.200.json
 <> 2019-06-11T014812.400.json
+
 ###
 
 #浏览器中输入：直接获取access_token
@@ -61,14 +64,14 @@ GET http://localhost:8080/oauth/authorize?client_id=jie&response_type=token&redi
 
 ###
 #获取OAuth2客户信息
-GET http://localhost:8080/user?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzb3VyY2VJZCJdLCJnZGpiIjoid3d3LmdkLWpiLmNvbSIsInVzZXJfbmFtZSI6InJvb3QiLCJzY29wZSI6WyJhcHAiLCJ0ZXN0Il0sImV4cCI6MTU2MDI3NDk5OSwiYXV0aG9yaXRpZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiJdLCJqdGkiOiJhMWNiODIwMi05NWVlLTQwODYtYmM2ZC0wZGFkZmRjYWNkZGUiLCJjbGllbnRfaWQiOiJqaWUifQ.QMfIHUkFwnFRlolQZ_TNskMm3f3I3mk8jz3D1cYGPFY
+GET http://localhost:8080/user?access_token=0f08846e-d727-4370-8afb-4d802c30e458
 Accept: */*
 Cache-Control: no-cache
 
 ###
 
 #通过refresh_token获取access_token与refresh_token
-POST http://jie:jbkj@localhost:8080/oauth/token?refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzb3VyY2VJZCJdLCJnZGpiIjoid3d3LmdkLWpiLmNvbSIsInVzZXJfbmFtZSI6InJvb3QiLCJzY29wZSI6WyJhcHAiLCJ0ZXN0Il0sImF0aSI6IjFjYzRkMjNlLTgwYWUtNDQxYi1hOWE3LTM3OGUwODIyZTNlNyIsImV4cCI6MTU2MjgyMTM0NCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9TVVBFUl9BRE1JTiJdLCJqdGkiOiJlMTk4Y2E1ZS0wYTVhLTRhZjEtODA4Yi04MmQ1OTJjZThmYTYiLCJjbGllbnRfaWQiOiJqaWUifQ.kanuYaMY0Rp_bPHf2ga4-09vjIJIdp-yIjHtuQye4wE&grant_type=refresh_token&scope=app test
+POST http://jie:jbkj@localhost:8080/oauth/token?refresh_token=52c1ddf6-4b35-4ba7-95e0-03b7f74f3928&grant_type=refresh_token&scope=app test
 Accept: */*
 Cache-Control: no-cache
 

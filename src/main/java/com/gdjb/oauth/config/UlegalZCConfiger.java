@@ -1,6 +1,7 @@
 package com.gdjb.oauth.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -18,8 +19,6 @@ import javax.sql.DataSource;
 @Configuration
 public class UlegalZCConfiger {
 
-//    @Autowired
-//    ConfigService configService;
 
     @Bean
     public JdbcTemplate getJdbcTemplate() {
@@ -40,14 +39,14 @@ public class UlegalZCConfiger {
      * 跨域
      * @return
      */
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**");
+//            }
+//        };
+//    }
 
 }

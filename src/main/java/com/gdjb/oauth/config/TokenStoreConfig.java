@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.gdjb.oauth.config;
 
@@ -28,20 +28,20 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  **/
 @Configuration
 public class TokenStoreConfig {
-	@Autowired
-	private TokenStore tokenStore;
+    @Autowired
+    private TokenStore tokenStore;
 
-	@Bean
+/*	@Bean
 	public ApprovalStore approvalStore() throws Exception {
 		TokenApprovalStore store = new TokenApprovalStore();
 		store.setTokenStore(tokenStore);
 		return store;
-	}
+	}*/
 
-	/**
-	 * 使用InMemory存储token的配置，只有在custom.security.oauth2.tokenStore配置为inMemory时生效
-	 **/
-	@Configuration
+    /**
+     * 使用InMemory存储token的配置，只有在custom.security.oauth2.tokenStore配置为inMemory时生效
+     **/
+	/*@Configuration
 	@ConditionalOnProperty(prefix = "custom.security.oauth2", name = "tokenStore", havingValue = "inMemory")
 	public static class InMemoryTokenStoreConfig {
 
@@ -54,54 +54,57 @@ public class TokenStoreConfig {
 			return new InMemoryTokenStore();
 		}
 
-	}
-	
-	/**
-	 * 使用redis存储token的配置，只有在custom.security.oauth2.tokenStore配置为redis时生效
-	 **/
+	}*/
 
-	@Configuration
-	@ConditionalOnProperty(prefix = "custom.security.oauth2", name = "tokenStore", havingValue = "redis")
-	public static class RedisTokenStoreConfig {
-		
-		@Autowired
-		private RedisConnectionFactory redisConnectionFactory;
-		
-		@Bean
-		public TokenStore redisTokenStore() {
-			return new RedisTokenStore(redisConnectionFactory);
-		}
-		
-	}
+    /**
+     * 使用redis存储token的配置，只有在custom.security.oauth2.tokenStore配置为redis时生效
+     **/
 
-	/**
-	 * 使用jwt存储token的配置，只有在custom.security.oauth2.tokenStore配置为jwt时生效
-	 **/
-	@Configuration
-	@ConditionalOnProperty(prefix = "custom.security.oauth2", name = "tokenStore", havingValue = "jwt", matchIfMissing = true)
-	public static class JwtTokenStoreConfig {
+    @Configuration
+    @ConditionalOnProperty(prefix = "custom.security.oauth2", name = "tokenStore", havingValue = "redis")
+    public static class RedisTokenStoreConfig {
+
+        @Autowired
+        private RedisConnectionFactory redisConnectionFactory;
+
+        @Bean
+        public TokenStore redisTokenStore() {
+            return new RedisTokenStore(redisConnectionFactory);
+        }
+
+    }
+
+    /**
+     * 使用jwt存储token的配置，只有在custom.security.oauth2.tokenStore配置为jwt时生效
+     **/
+    @Configuration
+    @ConditionalOnProperty(prefix = "custom.security.oauth2", name = "tokenStore", havingValue = "jwt", matchIfMissing = true)
+    public static class JwtTokenStoreConfig {
+
+        @Autowired
+        private ApplicationProperties applicationProperties;
+
+        @Bean
+        public TokenStore jwtTokenStore() {
+            return new JwtTokenStore(jwtAccessTokenConverter());
+        }
+
+        @Bean
+        public JwtAccessTokenConverter jwtAccessTokenConverter() {
+            JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+            converter.setSigningKey(applicationProperties.getSecurity().getOauth2().getJwtSigningKey());
+            return converter;
+        }
 		
-		@Autowired
-		private ApplicationProperties applicationProperties;
-		
-		@Bean
-		public TokenStore jwtTokenStore() {
-			return new JwtTokenStore(jwtAccessTokenConverter());
-		}
-		
-		@Bean
-		public JwtAccessTokenConverter jwtAccessTokenConverter(){
-			JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-	        converter.setSigningKey(applicationProperties.getSecurity().getOauth2().getJwtSigningKey());
-	        return converter;
-		}
-		
-		@Bean
+	/*	@Bean
 		@ConditionalOnBean(TokenEnhancer.class)
 		public TokenEnhancer jwtTokenEnhancer(){
 			return new JwtTokenEnhancer();
 		}
-		
-	}
+		*/
+
+
+    }
+
 
 }

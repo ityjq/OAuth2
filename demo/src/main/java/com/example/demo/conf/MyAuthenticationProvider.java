@@ -24,7 +24,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        System.out.println("=-=-=-=-=:"+username);
+        System.out.println("=-=-=-=-=:" + username);
 
 //        List<Map<String,String>> result = configService.getSystemVo(" select * from system_default where pid = ( select id from system_default where key_name = 'defaultSystemUser' and key_value = '1' ) ORDER BY pid, id; ");
 //        Map user = result.get(0);
@@ -38,7 +38,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
 //        if (!encoder.matches(password, encodedPassword)) {
 //            throw new BadCredentialsException("Wrong password.");
 //        }
-        User user=new User();
+        User user = new User();
 
 
         Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList("USER");

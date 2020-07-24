@@ -72,10 +72,4 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
 }

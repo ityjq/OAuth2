@@ -22,8 +22,8 @@
             });
         });
 */
-        $(document).ready(function(){
-            $("button").click(function(){
+        $(document).ready(function () {
+            $("button").click(function () {
                 $.get("http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/");
             });
         });
@@ -40,7 +40,7 @@
 <button type="button" ng-click="gainCode()">获取授权码</button>
 <a href="http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/">获取授权码</a>
 <button type="button" ng-click="redirect1()">重定向测试</button>
-<button type="button" id="nimei" >nimei</button>
+<button type="button" id="nimei">nimei</button>
 
 <input placeholder="Code" ng-model="code">
 <button type="button" ng-click="gainToken()">获取token</button>

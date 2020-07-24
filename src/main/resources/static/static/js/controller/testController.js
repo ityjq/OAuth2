@@ -30,10 +30,10 @@ com.gdjb.oauth.controller('testController', function ($scope, $timeout, testServ
         $scope.gainToken = function () {
             // window.clearInterval(t2);
 
-            if ($scope.code==null)
+            if ($scope.code == null)
                 alert($scope.code)
             else {
-                alert( "进来了:"+ $scope.code)
+                alert("进来了:" + $scope.code)
                 testService.gainToken($scope.code).success(
                     function (response) {
                         $scope.token = response;

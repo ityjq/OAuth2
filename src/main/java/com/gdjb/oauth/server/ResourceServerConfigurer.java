@@ -35,10 +35,18 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .requestMatchers()
-                .antMatchers("/user", "/resources/**", "/oauth/token")
+                .antMatchers("/user")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user", "/resources/**", "/oauth/token")
+                .antMatchers("/user")
                 .authenticated();
     }
+
+  /*  @Override
+    public void configure(final HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests()
+                .anyRequest()
+                .permitAll();
+    }
+*/
 }

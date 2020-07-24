@@ -2,7 +2,7 @@
 custom:
   security:
     oauth2:
-#      tokenStore: jwt # inMemory redis jwt
+      #      tokenStore: jwt # inMemory redis jwt
       jwtSigningKey: signature.jbkj.abcd
   api:
     clientId: jie

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public interface ThirdClientDao {
 
     @Select("select * from oauth_client_details")
-    @Results(id="ThirdClient", value={
+    @Results(id = "ThirdClient", value = {
             @Result(property = "clientId", column = "client_id"),
             @Result(property = "resourceIds", column = "resource_ids"),
             @Result(property = "redirectUris", column = "web_server_redirect_uri"),

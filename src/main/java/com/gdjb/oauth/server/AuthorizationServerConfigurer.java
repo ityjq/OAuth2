@@ -1,6 +1,5 @@
 package com.gdjb.oauth.server;
 
-import com.gdjb.oauth.dao.ThirdClientDao;
 import com.gdjb.oauth.pojo.oauth.ThirdClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,21 +14,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.client.BaseClientDetails;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author jie
@@ -42,6 +38,11 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Autowired
     private TokenStore tokenStore;
 
+    @Bean // 声明TokenStore实现
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -53,12 +54,12 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Autowired
     private UserDetailsService myUserDetailsService;
-
+/*
     @Autowired(required = false)
     private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired(required = false)
-    private TokenEnhancer jwtTokenEnhancer;
+    private TokenEnhancer jwtTokenEnhancer;*/
 
     @Autowired
     private ThirdClientService thirdClientService;
@@ -74,8 +75,8 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
         //添加客户端信息
         //使用内存存储OAuth客户端信息
-//        clients.jdbc(dataSource);
-        clients.inMemory()
+        clients.jdbc(dataSource);
+       /* clients.inMemory()
                 // client_id
                 .withClient(jbkj1.getclientId())
                 // client_secret
@@ -112,6 +113,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
 
         System.out.println(Arrays.toString(jbkj3.getScopes().split(",")) + ":::::::::" + jbkj3.getAuthorizedGrantTypes());
+*/
     }
 
 
@@ -123,8 +125,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         tokenServices.setTokenStore(tokenStore); // use jdbc token store
         return tokenServices;
     }
-
-
+/*
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         //reuseRefreshTokens设置为false时，每次通过refresh_token获得access_token时，也会刷新refresh_token；也就是说，会返回全新的access_token与refresh_token。
@@ -145,7 +146,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
             //  System.err.println(jwtAccessTokenConverter+"::::::::::::"+jwtTokenEnhancer);
             endpoints.tokenEnhancer(enhancerChain).accessTokenConverter(jwtAccessTokenConverter);
         }
-    }
+    }*/
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -162,23 +163,35 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         return new JdbcClientDetailsService(dataSource);
     }
 
-  /*  @Bean
-    public ClientDetailsService clientDetailsService(ThirdClientDao thirdClient, PasswordEncoder passwordEncoder) {
-        return clientId -> {
-            ThirdClient client1 = thirdClient.findById(clientId);
-            if (client1 == null) {
-                throw new ClientRegistrationException("clientId无效");
-            }
-            ThirdClient client =client1;
-            String clientSecretAfterEncoder = passwordEncoder.encode(client.getSecret());
-            BaseClientDetails clientDetails = new BaseClientDetails();
-            clientDetails.setClientId(client.getclientId());
-            clientDetails.setClientSecret(clientSecretAfterEncoder);
-            clientDetails.setRegisteredRedirectUri(new HashSet<>(Arrays.asList(client.getRedirectUris().split(","))));
-            clientDetails.setAuthorizedGrantTypes(Arrays.asList(client.getAuthorizedGrantTypes().split(",")));
-            clientDetails.setScope(Arrays.asList(client.getScopes().split(",")));
-            return clientDetails;
-        };
-    }*/
+    @Bean
+    public AuthorizationCodeServices authorizationCodeServices() {
+        return new JdbcAuthorizationCodeServices(dataSource);
+    }
+
+    @Override // 配置框架应用上述实现
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore).reuseRefreshTokens(true).approvalStore(approvalStore);
+        endpoints.authorizationCodeServices(authorizationCodeServices());
+        endpoints.userDetailsService(myUserDetailsService);
+//        System.err.println("++++++++++" + passwordEncoder.encode("jbkj"));
+//         配置TokenServices参数
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)); // 1天
+        endpoints.tokenServices(tokenServices);
+
+
+    }
+
+    @Bean
+    public ApprovalStore approvalStore() throws Exception {
+        TokenApprovalStore store = new TokenApprovalStore();
+        store.setTokenStore(tokenStore);
+        return store;
+    }
 
 }

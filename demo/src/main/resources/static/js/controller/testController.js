@@ -1,5 +1,5 @@
 //控制层
-app.controller('testController', function ($scope, $timeout,$http, testService) {
+app.controller('testController', function ($scope, $timeout, $http, testService) {
 
         $scope.aaa = function () {
             // window.clearInterval(t2);
@@ -63,17 +63,15 @@ app.controller('testController', function ($scope, $timeout,$http, testService) 
             if ($scope.code == null)
                 alert($scope.code)
             else {
-                $http.jsonp('http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/').success(function(lastData, status, headers) {
-                    alert(status,status,headers)
-                    if (status==302) {
-                        alert(status,status,headers)
+                $http.jsonp('http://localhost:8080/oauth/authorize?client_id=jie&response_type=code&redirect_uri=http://localhost:8090/').success(function (lastData, status, headers) {
+                    alert(status, status, headers)
+                    if (status == 302) {
+                        alert(status, status, headers)
 
-                    }else if (status==200) {
-                        alert(200) ;
+                    } else if (status == 200) {
+                        alert(200);
                     }
                 });
-
-
 
 
             }

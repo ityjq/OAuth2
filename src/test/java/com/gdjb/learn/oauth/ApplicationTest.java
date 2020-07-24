@@ -13,18 +13,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ApplicationTest {
 
-	private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	ApplicationProperties applicationProperties;
+    @Autowired
+    ApplicationProperties applicationProperties;
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
-	@Test
-	public void method() {
-		LOGGER.info("clientId:{}", applicationProperties.getApi().getClientId());
-		LOGGER.info("JwtSigningKey:{}", applicationProperties.getSecurity().getOauth2().getJwtSigningKey());
-	}
+    @Test
+    public void method() {
+        LOGGER.info("clientId:{}", applicationProperties.getApi().getClientId());
+        LOGGER.info("JwtSigningKey:{}", applicationProperties.getSecurity().getOauth2().getJwtSigningKey());
+    }
 }
